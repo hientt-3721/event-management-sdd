@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "events": "Events",
+    "myTickets": "My Tickets",
+    "organizer": "Organizer",
+    "checkin": "Check-in",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "docs": "Docs"
+  },
+  "home": {
+    "title": "Your events, simpler than ever",
+    "subtitle": "Register for events, get digital QR tickets, and check in quickly at any event.",
+    "viewEvents": "Browse Events",
+    "login": "Sign In",
+    "enterOrganizer": "Go to Organizer",
+    "featuresTitle": "Everything you need",
+    "feature1Title": "Digital Tickets",
+    "feature1Desc": "Get a QR ticket immediately after registering, saved on your phone.",
+    "feature2Title": "Fast Check-in",
+    "feature2Desc": "Scan QR at the door, confirm attendance in seconds.",
+    "feature3Title": "Event Management",
+    "feature3Desc": "Organizers can easily create events, manage ticket types, and track attendees."
+  },
+  "events": {
+    "title": "Events",
+    "subtitle": "Discover and register for upcoming events.",
+    "empty": "No events yet.",
+    "emptyHint": "Check back later!",
+    "viewDetail": "View Details",
+    "register": "Register",
+    "soldOut": "Sold Out",
+    "available": "{count} tickets",
+    "remaining": "{count} remaining",
+    "registerSuccess": "Registration successful!",
+    "qrInstructions": "Show this QR code at check-in.",
+    "close": "Close",
+    "ticketTypes": "Ticket Types",
+    "registering": "Registering..."
+  },
+  "tickets": {
+    "title": "My Tickets",
+    "subtitle": "Manage and view your digital tickets.",
+    "empty": "You have no tickets yet.",
+    "emptyHint": "Browse events to register.",
+    "viewTicket": "View Ticket",
+    "cancelTicket": "Cancel Ticket",
+    "confirmCancel": "Confirm Cancellation",
+    "backToTickets": "← Back to tickets",
+    "ticketCode": "Ticket ID",
+    "status": {
+      "active": "Active",
+      "used": "Used",
+      "cancelled": "Cancelled"
+    }
+  },
+  "organizer": {
+    "title": "Organizer",
+    "subtitle": "Manage your events.",
+    "createEvent": "Create Event",
+    "newEvent": "Create New Event",
+    "publish": "Publish",
+    "cancelEvent": "Cancel Event",
+    "confirmCancelEvent": "Confirm Cancel",
+    "checkin": "Check-In",
+    "registrations": "registrations",
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "cancelled": "Cancelled"
+    }
+  },
+  "checkin": {
+    "title": "Check-In",
+    "subtitle": "Scan the QR code on attendees' digital tickets.",
+    "scanNext": "Scan Next Ticket",
+    "result": {
+      "valid": "✓ Valid",
+      "already_used": "⚠ Already Used",
+      "cancelled": "✕ Cancelled",
+      "not_found": "✕ Not Found",
+      "error": "✕ Error"
+    }
+  },
+  "auth": {
+    "loginTitle": "Welcome!",
+    "loginSubtitle": "Sign in to register for events and manage your tickets.",
+    "signInWithGoogle": "Sign in with Google",
+    "authError": "Sign in failed. Please try again."
+  },
+  "errors": {
+    "SOLD_OUT": "Tickets are sold out!",
+    "ALREADY_REGISTERED": "You have already registered for this ticket.",
+    "EVENT_NOT_PUBLISHED": "This event is not open for registration.",
+    "UNAUTHENTICATED": "Please sign in to continue.",
+    "FORBIDDEN": "You do not have permission to perform this action."
+  }
+}

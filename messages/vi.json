@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "events": "Sự kiện",
+    "myTickets": "Vé của tôi",
+    "organizer": "Ban tổ chức",
+    "checkin": "Check-in",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "docs": "Tài liệu"
+  },
+  "home": {
+    "title": "Sự kiện của bạn, đơn giản hơn bao giờ hết",
+    "subtitle": "Đăng ký tham dự, nhận vé điện tử QR và check-in nhanh chóng tại mọi sự kiện.",
+    "viewEvents": "Xem sự kiện",
+    "login": "Đăng nhập",
+    "enterOrganizer": "Vào trang tổ chức",
+    "featuresTitle": "Tất cả những gì bạn cần",
+    "feature1Title": "Vé điện tử",
+    "feature1Desc": "Nhận vé QR ngay sau khi đăng ký, lưu trên điện thoại.",
+    "feature2Title": "Check-in nhanh",
+    "feature2Desc": "Quét QR tại cửa, xác nhận tham dự trong vài giây.",
+    "feature3Title": "Quản lý sự kiện",
+    "feature3Desc": "Ban tổ chức dễ dàng tạo sự kiện, quản lý loại vé và theo dõi người tham dự."
+  },
+  "events": {
+    "title": "Sự kiện",
+    "subtitle": "Khám phá và đăng ký tham dự các sự kiện sắp tới.",
+    "empty": "Chưa có sự kiện nào.",
+    "emptyHint": "Hãy quay lại sau nhé!",
+    "viewDetail": "Xem chi tiết",
+    "register": "Đăng ký tham dự",
+    "soldOut": "Hết vé",
+    "available": "{count} vé",
+    "remaining": "{count} còn lại",
+    "registerSuccess": "Đăng ký thành công!",
+    "qrInstructions": "Xuất trình mã QR này khi check-in tại sự kiện.",
+    "close": "Đóng",
+    "ticketTypes": "Loại vé",
+    "registering": "Đang đăng ký..."
+  },
+  "tickets": {
+    "title": "Vé của tôi",
+    "subtitle": "Quản lý và xem vé điện tử của bạn.",
+    "empty": "Bạn chưa có vé nào.",
+    "emptyHint": "Xem sự kiện để đăng ký tham dự.",
+    "viewTicket": "Xem vé",
+    "cancelTicket": "Huỷ vé",
+    "confirmCancel": "Xác nhận huỷ",
+    "backToTickets": "← Quay lại danh sách vé",
+    "ticketCode": "Mã vé",
+    "status": {
+      "active": "Còn hiệu lực",
+      "used": "Đã sử dụng",
+      "cancelled": "Đã huỷ"
+    }
+  },
+  "organizer": {
+    "title": "Ban tổ chức",
+    "subtitle": "Quản lý sự kiện của bạn.",
+    "createEvent": "Tạo sự kiện",
+    "newEvent": "Tạo sự kiện mới",
+    "publish": "Xuất bản",
+    "cancelEvent": "Huỷ sự kiện",
+    "confirmCancelEvent": "Xác nhận huỷ",
+    "checkin": "Check-in",
+    "registrations": "đăng ký",
+    "status": {
+      "draft": "Nháp",
+      "published": "Đang mở",
+      "cancelled": "Đã huỷ"
+    }
+  },
+  "checkin": {
+    "title": "Check-in",
+    "subtitle": "Quét mã QR trên vé điện tử của người tham dự.",
+    "scanNext": "Quét vé tiếp theo",
+    "result": {
+      "valid": "✓ Hợp lệ",
+      "already_used": "⚠ Đã sử dụng",
+      "cancelled": "✕ Đã huỷ",
+      "not_found": "✕ Không tìm thấy",
+      "error": "✕ Lỗi"
+    }
+  },
+  "auth": {
+    "loginTitle": "Chào mừng!",
+    "loginSubtitle": "Đăng nhập để đăng ký sự kiện và quản lý vé của bạn.",
+    "signInWithGoogle": "Đăng nhập bằng Google",
+    "authError": "Đăng nhập thất bại. Vui lòng thử lại."
+  },
+  "errors": {
+    "SOLD_OUT": "Vé đã hết, rất tiếc!",
+    "ALREADY_REGISTERED": "Bạn đã đăng ký vé này rồi.",
+    "EVENT_NOT_PUBLISHED": "Sự kiện chưa mở đăng ký.",
+    "UNAUTHENTICATED": "Vui lòng đăng nhập để thực hiện.",
+    "FORBIDDEN": "Bạn không có quyền thực hiện thao tác này."
+  }
+}
