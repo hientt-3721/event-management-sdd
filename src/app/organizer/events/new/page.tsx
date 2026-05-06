@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { createEvent, addTicketType } from '@/features/events/actions'
 
@@ -12,6 +13,7 @@ interface TicketTypeInput {
 }
 
 export default function NewEventPage() {
+  const t = useTranslations('organizer.form')
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
@@ -49,7 +51,7 @@ export default function NewEventPage() {
 
       const result = await createEvent(eventInput)
       if (result.error) {
-        setError('Không thể tạo sự kiện: ' + result.error)
+        setError(t('errorCreate') + result.error)
         return
       }
 
@@ -69,40 +71,40 @@ export default function NewEventPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Tạo sự kiện mới</h1>
+      <h1 className="mb-6 text-2xl font-bold text-gray-900">{t('newEventTitle')}</h1>
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">Tên sự kiện *</label>
-          <input name="name" required className="input-field" placeholder="VD: Tech Conference 2025" />
+          <label className="mb-1 block text-sm font-medium text-gray-700">{t('nameLabel')}</label>
+          <input name="name" required className="input-field" placeholder={t('namePlaceholder')} />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">Mô tả *</label>
-          <textarea name="description" required rows={4} className="input-field" placeholder="Mô tả về sự kiện..." />
+          <label className="mb-1 block text-sm font-medium text-gray-700">{t('descLabel')}</label>
+          <textarea name="description" required rows={4} className="input-field" placeholder={t('descPlaceholder')} />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">Bắt đầu *</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">{t('startLabel')}</label>
             <input name="start_at" type="datetime-local" required className="input-field" />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">Kết thúc *</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">{t('endLabel')}</label>
             <input name="end_at" type="datetime-local" required className="input-field" />
           </div>
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">Địa điểm *</label>
-          <input name="location" required className="input-field" placeholder="VD: Hội trường A, 123 Nguyễn Huệ, TP.HCM" />
+          <label className="mb-1 block text-sm font-medium text-gray-700">{t('locationLabel')}</label>
+          <input name="location" required className="input-field" placeholder={t('locationPlaceholder')} />
         </div>
 
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-800">Loại vé</h2>
+            <h2 className="text-sm font-semibold text-gray-800">{t('ticketTypesLabel')}</h2>
             <button
               type="button"
               onClick={addTicketTypeRow}
               className="text-xs text-indigo-600 hover:underline"
             >
-              + Thêm loại vé
+              {t('addTicketType')}
             </button>
           </div>
           <div className="space-y-3">
@@ -112,7 +114,7 @@ export default function NewEventPage() {
                   <input
                     value={tt.name}
                     onChange={(e) => updateTicketType(idx, 'name', e.target.value)}
-                    placeholder="Tên loại vé *"
+                    placeholder={t('ticketNamePlaceholder')}
                     className="input-field flex-1"
                   />
                   <input
@@ -120,7 +122,7 @@ export default function NewEventPage() {
                     onChange={(e) => updateTicketType(idx, 'total_quantity', e.target.value)}
                     type="number"
                     min="1"
-                    placeholder="Số lượng"
+                    placeholder={t('ticketQuantityPlaceholder')}
                     className="input-field w-24"
                   />
                   {ticketTypes.length > 1 && (
@@ -136,7 +138,7 @@ export default function NewEventPage() {
                 <input
                   value={tt.description}
                   onChange={(e) => updateTicketType(idx, 'description', e.target.value)}
-                  placeholder="Mô tả loại vé (tuỳ chọn)"
+                  placeholder={t('ticketDescPlaceholder')}
                   className="input-field w-full"
                 />
               </div>
@@ -146,8 +148,8 @@ export default function NewEventPage() {
 
         {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
         <div className="flex gap-3">
-          <Button type="submit" loading={pending} className="flex-1">Tạo sự kiện</Button>
-          <Button type="button" variant="secondary" onClick={() => router.back()}>Hủy</Button>
+          <Button type="submit" loading={pending} className="flex-1">{t('createBtn')}</Button>
+          <Button type="button" variant="secondary" onClick={() => router.back()}>{t('cancelBtn')}</Button>
         </div>
       </form>
     </main>

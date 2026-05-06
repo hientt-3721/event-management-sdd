@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { cancelTicket } from '@/features/tickets/actions'
 
@@ -10,6 +11,7 @@ interface CancelTicketButtonProps {
 }
 
 export function CancelTicketButton({ ticketId }: CancelTicketButtonProps) {
+  const t = useTranslations('tickets')
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [confirming, setConfirming] = useState(false)
@@ -22,14 +24,14 @@ export function CancelTicketButton({ ticketId }: CancelTicketButtonProps) {
         className="w-full"
         onClick={() => setConfirming(true)}
       >
-        Huỷ vé
+        {t('cancelTicket')}
       </Button>
     )
   }
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-gray-600">Bạn có chắc muốn huỷ vé này không?</p>
+      <p className="text-sm text-gray-600">{t('confirmCancelMessage')}</p>
       <div className="flex gap-2">
         <Button
           variant="danger"
@@ -40,21 +42,22 @@ export function CancelTicketButton({ ticketId }: CancelTicketButtonProps) {
               setError(null)
               const result = await cancelTicket(ticketId)
               if (result.error) {
-                setError('Không thể huỷ vé. Vui lòng thử lại.')
+                setError(t('cancelError'))
               } else {
+                router.refresh()
                 router.push('/tickets')
               }
             })
           }}
         >
-          Xác nhận huỷ
+          {t('confirmCancel')}
         </Button>
         <Button
           variant="secondary"
           className="flex-1"
           onClick={() => setConfirming(false)}
         >
-          Quay lại
+          {t('goBack')}
         </Button>
       </div>
       {error && <p role="alert" className="text-xs text-red-600">{error}</p>}

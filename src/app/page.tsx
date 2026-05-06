@@ -1,29 +1,13 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
-
-const features = [
-  {
-    icon: '🎟️',
-    title: 'Vé điện tử',
-    desc: 'Nhận vé QR ngay sau khi đăng ký, lưu trên điện thoại.',
-  },
-  {
-    icon: '📱',
-    title: 'Check-in nhanh',
-    desc: 'Quét QR tại cửa, xác nhận tham dự trong vài giây.',
-  },
-  {
-    icon: '📊',
-    title: 'Quản lý sự kiện',
-    desc: 'Ban tổ chức dễ dàng tạo sự kiện, quản lý loại vé và theo dõi người tham dự.',
-  },
-]
 
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  const t = await getTranslations('home')
 
   const profileResult = user
     ? (await supabase.from('profiles').select('role').eq('id', user.id).single()).data
@@ -33,7 +17,13 @@ export default async function HomePage() {
   const primaryHref =
     role === 'organizer' || role === 'staff' ? '/organizer' : '/events'
   const primaryLabel =
-    role === 'organizer' || role === 'staff' ? 'Vào trang tổ chức' : 'Xem sự kiện'
+    role === 'organizer' || role === 'staff' ? t('enterOrganizer') : t('viewEvents')
+
+  const features = [
+    { icon: '🎟️', title: t('feature1Title'), desc: t('feature1Desc') },
+    { icon: '📱', title: t('feature2Title'), desc: t('feature2Desc') },
+    { icon: '📊', title: t('feature3Title'), desc: t('feature3Desc') },
+  ]
 
   return (
     <main className="relative overflow-hidden">
@@ -47,15 +37,14 @@ export default async function HomePage() {
         </span>
 
         <h1 className="max-w-2xl text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl">
-          Sự kiện của bạn,<br />
+          {t('title').split(',')[0]},<br />
           <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            đơn giản hơn bao giờ hết
+            {t('title').split(',').slice(1).join(',').trim()}
           </span>
         </h1>
 
         <p className="mt-5 max-w-xl text-lg text-gray-500">
-          Đăng ký tham dự, nhận vé điện tử QR và check-in nhanh chóng tại mọi sự kiện.
-          Dành cho cả người tham dự lẫn ban tổ chức.
+          {t('subtitle')}
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
@@ -70,7 +59,7 @@ export default async function HomePage() {
               href="/login"
               className="rounded-xl border border-gray-300 bg-white px-8 py-3 text-base font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
             >
-              Đăng nhập
+              {t('login')}
             </Link>
           )}
         </div>
@@ -79,7 +68,7 @@ export default async function HomePage() {
       {/* Features */}
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
         <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">
-          Tất cả những gì bạn cần
+          {t('featuresTitle')}
         </h2>
         <div className="grid gap-6 sm:grid-cols-3">
           {features.map((f) => (

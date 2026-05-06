@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { BentoCard } from '@/components/ui/bento-card'
 import { Badge } from '@/components/ui/badge'
 import type { EventWithTicketTypes } from '@/features/events/types'
@@ -20,6 +23,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, colSpan = 1 }: EventCardProps) {
+  const t = useTranslations('events')
   const totalCapacity = event.ticket_types.reduce((s, tt) => s + tt.total_quantity, 0)
   const totalIssued = event.ticket_types.reduce((s, tt) => s + tt.issued_count, 0)
   const remaining = totalCapacity - totalIssued
@@ -44,7 +48,7 @@ export function EventCard({ event, colSpan = 1 }: EventCardProps) {
           {event.name}
         </h2>
         <Badge variant={soldOut ? 'error' : 'success'} className="shrink-0">
-          {soldOut ? 'Hết vé' : `${remaining} vé`}
+          {soldOut ? t('soldOut') : t('available', { count: remaining })}
         </Badge>
       </div>
       <p className="text-xs text-gray-500 line-clamp-2">{event.description}</p>
@@ -56,7 +60,7 @@ export function EventCard({ event, colSpan = 1 }: EventCardProps) {
         href={`/events/${event.id}`}
         className="mt-1 block w-full rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
       >
-        Xem chi tiết
+        {t('viewDetail')}
       </Link>
     </BentoCard>
   )

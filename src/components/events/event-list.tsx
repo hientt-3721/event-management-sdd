@@ -1,3 +1,6 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import { BentoGrid } from '@/components/ui/bento-grid'
 import { EventCard } from './event-card'
 import type { EventWithTicketTypes } from '@/features/events/types'
@@ -7,11 +10,12 @@ interface EventListProps {
 }
 
 export function EventList({ events }: EventListProps) {
+  const t = useTranslations('events')
   if (events.length === 0) {
     return (
       <div className="py-20 text-center text-gray-500">
-        <p className="text-lg">Chưa có sự kiện nào.</p>
-        <p className="mt-1 text-sm">Hãy quay lại sau nhé!</p>
+        <p className="text-lg">{t('empty')}</p>
+        <p className="mt-1 text-sm">{t('emptyHint')}</p>
       </div>
     )
   }

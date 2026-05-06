@@ -1,137 +1,134 @@
 import { cookies } from 'next/headers'
 import { LangSwitcher } from '@/components/docs/lang-switcher'
+import { TerminalBlock } from '@/components/docs/terminal-block'
+import { DemoAccounts } from '@/components/docs/demo-accounts'
+
+export const dynamic = 'force-dynamic'
+
+const demoAccounts = {
+  vi: [
+    {
+      role: 'Người tham dự',
+      email: 'demo@attendee.com',
+      password: 'Demo1234!',
+      description: 'Tài khoản demo cho người tham dự',
+    },
+    {
+      role: 'Ban tổ chức',
+      email: 'demo@organizer.com',
+      password: 'Demo1234!',
+      description: 'Tài khoản demo cho ban tổ chức',
+    },
+  ],
+  en: [
+    {
+      role: 'Attendee',
+      email: 'demo@attendee.com',
+      password: 'Demo1234!',
+      description: 'Demo account for event attendees',
+    },
+    {
+      role: 'Organizer',
+      email: 'demo@organizer.com',
+      password: 'Demo1234!',
+      description: 'Demo account for event organizers',
+    },
+  ],
+}
 
 const content = {
   vi: {
     title: 'Tài liệu ứng dụng',
     subtitle: 'EventApp — Quản lý sự kiện & vé điện tử',
-    sections: [
-      {
-        heading: 'Giới thiệu',
-        body: 'EventApp là ứng dụng quản lý việc tham gia sự kiện toàn diện. Người dùng có thể đăng ký tham dự sự kiện, nhận vé điện tử dưới dạng mã QR và check-in nhanh chóng tại cửa vào.',
-      },
-      {
-        heading: 'Tính năng chính',
-        items: [
-          '🔐 Đăng nhập qua Google (OAuth 2.0 PKCE)',
-          '📅 Xem danh sách sự kiện đang mở đăng ký',
-          '🎫 Đăng ký tham dự và nhận vé điện tử (QR)',
-          '📱 Quản lý vé cá nhân — xem, huỷ vé',
-          '🏢 Ban tổ chức: tạo, xuất bản, huỷ sự kiện; cấu hình loại vé',
-          '🔍 Check-in bằng camera: quét và xác thực QR tại cửa',
-          '⏰ Nhắc lịch qua email trước 24h và 1h trước sự kiện',
-          '🌐 Giao diện song ngữ Tiếng Việt / English',
-        ],
-      },
-      {
-        heading: 'Hướng dẫn sử dụng',
-        subsections: [
-          {
-            heading: 'Người tham dự',
-            steps: [
-              'Đăng nhập bằng tài khoản Google.',
-              'Vào trang "Sự kiện" để xem các sự kiện đang mở.',
-              'Nhấn "Xem chi tiết" để xem thông tin và chọn loại vé.',
-              'Nhấn "Đăng ký tham dự" — mã QR sẽ hiển thị ngay sau khi đăng ký.',
-              'Vào "Vé của tôi" để xem lại mã QR bất cứ lúc nào.',
-            ],
-          },
-          {
-            heading: 'Ban tổ chức',
-            steps: [
-              'Đăng nhập với tài khoản có quyền organizer.',
-              'Vào "Ban tổ chức" → "Tạo sự kiện".',
-              'Điền thông tin sự kiện và thêm các loại vé.',
-              'Nhấn "Xuất bản" để mở đăng ký cho người dùng.',
-              'Tại trang chi tiết sự kiện, nhấn "Check-in" để mở trang quét QR.',
-            ],
-          },
-        ],
-      },
-      {
-        heading: 'Công nghệ sử dụng',
-        items: [
-          'Next.js 14 (App Router, Server Actions)',
-          'Supabase (PostgreSQL + Auth + Storage + Realtime)',
-          'Tailwind CSS — Bento Grid layout',
-          'next-intl — đa ngôn ngữ',
-          'Resend — gửi email nhắc lịch',
-          'Vercel — hosting & cron jobs',
-        ],
-      },
-    ],
+    demoTitle: 'Tài khoản demo',
+    demoHint: 'Dùng các tài khoản dưới đây để trải nghiệm ứng dụng ngay lập tức.',
+    loginHint: 'Đăng nhập bằng Email trên trang login.',
+    features: {
+      heading: 'Tính năng chính',
+      items: [
+        '🔐 Đăng nhập qua Google hoặc Email/Password',
+        '📅 Xem danh sách sự kiện đang mở đăng ký',
+        '🎫 Đăng ký tham dự và nhận vé điện tử (QR)',
+        '📱 Quản lý vé cá nhân — xem, huỷ vé',
+        '🏢 Ban tổ chức: tạo, xuất bản, huỷ sự kiện; cấu hình loại vé',
+        '🔍 Check-in bằng camera: quét và xác thực QR tại cửa',
+        '⏰ Nhắc lịch qua email trước 24h và 1h trước sự kiện',
+        '🌐 Giao diện song ngữ Tiếng Việt / English',
+      ],
+    },
+    attendeeGuide: {
+      heading: 'Hướng dẫn người tham dự',
+      steps: [
+        'Truy cập /events để xem danh sách sự kiện',
+        'Chọn sự kiện và nhấn "Đăng ký tham dự"',
+        'Nhận mã QR ngay trên màn hình',
+        'Vào /tickets để xem và quản lý vé',
+      ],
+    },
+    organizerGuide: {
+      heading: 'Hướng dẫn ban tổ chức',
+      steps: [
+        'Truy cập /organizer sau khi đăng nhập',
+        'Nhấn "+ Tạo sự kiện" để tạo sự kiện mới',
+        'Thêm loại vé và xuất bản sự kiện',
+        'Vào trang check-in để quét QR của người tham dự',
+      ],
+    },
+    devSetup: {
+      heading: 'Cài đặt môi trường phát triển',
+    },
   },
   en: {
     title: 'Documentation',
     subtitle: 'EventApp — Event Management & Digital Tickets',
-    sections: [
-      {
-        heading: 'Overview',
-        body: 'EventApp is a comprehensive event registration platform. Users can register for events, receive digital tickets as QR codes, and check in quickly at the entrance.',
-      },
-      {
-        heading: 'Key Features',
-        items: [
-          '🔐 Google Sign-In (OAuth 2.0 PKCE)',
-          '📅 Browse open events',
-          '🎫 Register and receive a digital QR ticket',
-          '📱 My Tickets — view and cancel tickets',
-          '🏢 Organizer: create, publish, cancel events; configure ticket types',
-          '🔍 Camera-based check-in: scan and validate QR codes',
-          '⏰ Email reminders 24h and 1h before event start',
-          '🌐 Bilingual UI — Vietnamese / English',
-        ],
-      },
-      {
-        heading: 'How to Use',
-        subsections: [
-          {
-            heading: 'Attendees',
-            steps: [
-              'Sign in with your Google account.',
-              'Go to "Events" to browse upcoming events.',
-              'Click "View Details" to select a ticket type.',
-              'Click "Register" — your QR code appears instantly.',
-              'Visit "My Tickets" to view your QR code at any time.',
-            ],
-          },
-          {
-            heading: 'Organizers',
-            steps: [
-              'Sign in with an organizer account.',
-              'Go to "Organizer" → "Create Event".',
-              'Fill in event details and add ticket types.',
-              'Click "Publish" to open registration.',
-              'From the event detail page, click "Check-In" to open the QR scanner.',
-            ],
-          },
-        ],
-      },
-      {
-        heading: 'Technology Stack',
-        items: [
-          'Next.js 14 (App Router, Server Actions)',
-          'Supabase (PostgreSQL + Auth + Storage + Realtime)',
-          'Tailwind CSS — Bento Grid layout',
-          'next-intl — i18n',
-          'Resend — email reminders',
-          'Vercel — hosting & cron jobs',
-        ],
-      },
-    ],
+    demoTitle: 'Demo Accounts',
+    demoHint: 'Use the accounts below to try the app instantly.',
+    loginHint: 'Use "Sign in with Email" on the login page.',
+    features: {
+      heading: 'Key Features',
+      items: [
+        '🔐 Sign in via Google or Email/Password',
+        '📅 Browse upcoming events open for registration',
+        '🎫 Register and receive digital QR tickets',
+        '📱 Manage personal tickets — view, cancel',
+        '🏢 Organizer dashboard: create, publish, cancel events; manage ticket types',
+        '🔍 Camera-based check-in: scan and validate QR at the door',
+        '⏰ Email reminders 24h and 1h before events',
+        '🌐 Bilingual UI: Vietnamese / English',
+      ],
+    },
+    attendeeGuide: {
+      heading: 'Attendee Guide',
+      steps: [
+        'Visit /events to browse the event list',
+        'Select an event and click "Register"',
+        'Receive your QR code immediately',
+        'Go to /tickets to view and manage your tickets',
+      ],
+    },
+    organizerGuide: {
+      heading: 'Organizer Guide',
+      steps: [
+        'Visit /organizer after signing in',
+        'Click "+ Create Event" to create a new event',
+        'Add ticket types and publish the event',
+        'Open the check-in page to scan attendees\' QR codes',
+      ],
+    },
+    devSetup: {
+      heading: 'Development Setup',
+    },
   },
-} as const
+}
 
-type Lang = keyof typeof content
-type Section = (typeof content.vi.sections)[number]
-
-export const dynamic = 'force-dynamic'
+type Lang = 'vi' | 'en'
 
 export default async function DocsPage() {
   const cookieStore = await cookies()
   const locale = (cookieStore.get('NEXT_LOCALE')?.value ?? 'vi') as Lang
   const lang: Lang = locale === 'en' ? 'en' : 'vi'
   const c = content[lang]
+  const accounts = demoAccounts[lang]
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
@@ -144,37 +141,57 @@ export default async function DocsPage() {
       </div>
 
       <div className="space-y-10">
-        {c.sections.map((section) => (
-          <section key={section.heading}>
-            <h2 className="mb-3 text-xl font-semibold text-gray-800">{section.heading}</h2>
-            {'body' in section && section.body && (
-              <p className="text-gray-600 leading-relaxed">{section.body}</p>
-            )}
-            {'items' in section && section.items && (
-              <ul className="space-y-2">
-                {section.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-gray-600">
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {'subsections' in section && section.subsections && (
-              <div className="space-y-6">
-                {section.subsections.map((sub) => (
-                  <div key={sub.heading}>
-                    <h3 className="mb-2 text-base font-semibold text-gray-700">{sub.heading}</h3>
-                    <ol className="list-decimal list-inside space-y-1.5 text-gray-600">
-                      {sub.steps.map((step) => (
-                        <li key={step}>{step}</li>
-                      ))}
-                    </ol>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        ))}
+        {/* Demo Accounts */}
+        <section>
+          <h2 className="mb-2 text-xl font-semibold text-gray-800">{c.demoTitle}</h2>
+          <p className="mb-4 text-sm text-gray-500">
+            {c.demoHint} <span className="font-medium text-indigo-600">{c.loginHint}</span>
+          </p>
+          <DemoAccounts accounts={accounts} />
+        </section>
+
+        {/* Features */}
+        <section>
+          <h2 className="mb-3 text-xl font-semibold text-gray-800">{c.features.heading}</h2>
+          <ul className="space-y-2">
+            {c.features.items.map((item) => (
+              <li key={item} className="flex items-start gap-2 text-gray-600">
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Attendee Guide */}
+        <section>
+          <h2 className="mb-3 text-xl font-semibold text-gray-800">{c.attendeeGuide.heading}</h2>
+          <ol className="list-decimal list-inside space-y-2 text-gray-600">
+            {c.attendeeGuide.steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Organizer Guide */}
+        <section>
+          <h2 className="mb-3 text-xl font-semibold text-gray-800">{c.organizerGuide.heading}</h2>
+          <ol className="list-decimal list-inside space-y-2 text-gray-600">
+            {c.organizerGuide.steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Dev Setup */}
+        <section>
+          <h2 className="mb-3 text-xl font-semibold text-gray-800">{c.devSetup.heading}</h2>
+          <div className="space-y-3">
+            <TerminalBlock command="git clone <repo-url> && cd event-management" />
+            <TerminalBlock command="pnpm install" />
+            <TerminalBlock command="cp .env.example .env.local" />
+            <TerminalBlock command="pnpm next dev -p 3005" />
+          </div>
+        </section>
       </div>
     </main>
   )

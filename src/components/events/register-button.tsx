@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { registerTicket } from '@/features/tickets/actions'
 
@@ -12,19 +13,14 @@ interface RegisterButtonProps {
   soldOutMessage?: string
 }
 
-const errorMessages: Record<string, string> = {
-  SOLD_OUT: 'Vé đã hết, rất tiếc!',
-  ALREADY_REGISTERED: 'Bạn đã đăng ký vé này rồi.',
-  EVENT_NOT_PUBLISHED: 'Sự kiện chưa mở đăng ký.',
-  UNAUTHENTICATED: 'Vui lòng đăng nhập để đăng ký.',
-}
-
 export function RegisterButton({
   ticketTypeId,
   ticketTypeName,
   disabled,
   soldOutMessage,
 }: RegisterButtonProps) {
+  const t = useTranslations('events')
+  const te = useTranslations('errors')
   const [pending, startTransition] = useTransition()
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -34,7 +30,10 @@ export function RegisterButton({
       setError(null)
       const result = await registerTicket(ticketTypeId)
       if (result.error) {
-        setError(errorMessages[result.error] ?? 'Đã có lỗi xảy ra.')
+        const knownErrors = ['SOLD_OUT', 'ALREADY_REGISTERED', 'EVENT_NOT_PUBLISHED', 'UNAUTHENTICATED', 'FORBIDDEN'] as const
+        type ErrorKey = typeof knownErrors[number]
+        const key = result.error as string
+        setError(knownErrors.includes(key as ErrorKey) ? te(key as ErrorKey) : te('unknown'))
       } else if (result.data) {
         setQrDataUrl(result.data.qrDataUrl)
       }
@@ -46,26 +45,26 @@ export function RegisterButton({
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Vé điện tử"
+        aria-label={t('registerSuccess')}
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       >
         <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
-          <h2 className="mb-1 text-xl font-bold text-gray-900">🎉 Đăng ký thành công!</h2>
+          <h2 className="mb-1 text-xl font-bold text-gray-900">🎉 {t('registerSuccess')}</h2>
           <p className="mb-4 text-sm text-gray-500">{ticketTypeName}</p>
           <div className="mx-auto mb-4 w-fit rounded-xl border border-gray-200 p-2">
             <Image
               src={qrDataUrl}
-              alt="QR code vé của bạn"
+              alt={t('qrAlt')}
               width={200}
               height={200}
               unoptimized
             />
           </div>
           <p className="mb-4 text-xs text-gray-400">
-            Xuất trình mã QR này khi check-in tại sự kiện.
+            {t('qrHint')}
           </p>
           <Button variant="secondary" onClick={() => setQrDataUrl(null)} className="w-full">
-            Đóng
+            {t('close')}
           </Button>
         </div>
       </div>
@@ -80,7 +79,7 @@ export function RegisterButton({
         disabled={disabled || pending}
         className="w-full"
       >
-        {soldOutMessage ?? 'Đăng ký tham dự'}
+        {soldOutMessage ?? t('register')}
       </Button>
       {error && <p role="alert" className="text-xs text-red-600">{error}</p>}
     </div>

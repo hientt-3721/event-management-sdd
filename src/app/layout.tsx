@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 import { SiteNav } from '@/components/layout/site-nav'
 import './globals.css'
 
@@ -14,16 +16,21 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.svg' },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   return (
-    <html lang="vi" className={inter.variable}>
+    <html lang={locale} className={inter.variable}>
       <body className="font-sans antialiased">
-        <SiteNav />
-        <div className="min-h-screen">{children}</div>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <SiteNav />
+          <div className="min-h-screen">{children}</div>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

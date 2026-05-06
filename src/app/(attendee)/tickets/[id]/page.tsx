@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { getTicketById } from '@/features/tickets/actions'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
@@ -21,14 +22,10 @@ export default async function TicketDetailPage({ params }: TicketDetailPageProps
   const ticket = await getTicketById(id, user.id)
   if (!ticket) notFound()
 
+  const t = await getTranslations('tickets')
   const event = ticket.ticket_types.events
   const qrDataUrl = ticket.status === 'active' ? await generateQrDataUrl(ticket.id) : null
 
-  const statusLabel: Record<string, string> = {
-    active: 'Còn hiệu lực',
-    used: 'Đã sử dụng',
-    cancelled: 'Đã huỷ',
-  }
   const statusVariant: Record<string, 'success' | 'error' | 'default'> = {
     active: 'success',
     used: 'default',
@@ -39,7 +36,7 @@ export default async function TicketDetailPage({ params }: TicketDetailPageProps
 
   return (
     <main className="mx-auto max-w-lg px-4 py-8 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Chi tiết vé</h1>
+      <h1 className="mb-6 text-2xl font-bold text-gray-900">{t('ticketDetail')}</h1>
 
       <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm space-y-4">
         <div className="flex items-start justify-between gap-2">
@@ -48,7 +45,7 @@ export default async function TicketDetailPage({ params }: TicketDetailPageProps
             <p className="text-sm text-gray-500">{ticket.ticket_types.name}</p>
           </div>
           <Badge variant={statusVariant[ticket.status] ?? 'default'}>
-            {statusLabel[ticket.status] ?? ticket.status}
+            {t(`status.${ticket.status as 'active' | 'used' | 'cancelled'}`)}
           </Badge>
         </div>
 
@@ -69,13 +66,13 @@ export default async function TicketDetailPage({ params }: TicketDetailPageProps
             <div className="rounded-xl border border-gray-200 p-2">
               <Image
                 src={qrDataUrl}
-                alt="QR code vé của bạn"
+                alt={t('qrTitle')}
                 width={200}
                 height={200}
                 unoptimized
               />
             </div>
-            <p className="text-xs text-gray-400">Mã vé: {ticket.id.slice(0, 8).toUpperCase()}</p>
+            <p className="text-xs text-gray-400">{t('ticketCode')}: {ticket.id.slice(0, 8).toUpperCase()}</p>
           </div>
         )}
 

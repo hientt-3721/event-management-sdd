@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { createServiceClient } from '@/lib/supabase/server'
 import { createClient } from '@/lib/supabase/server'
 import type { ActionResult } from '@/features/tickets/types'
@@ -41,5 +42,18 @@ export async function checkInTicket(
   if (error) return { data: null, error: error.message }
 
   const result = data as CheckInResult
+
+  // T005: revalidate organizer event page so attendee count updates
+  if (result.status === 'valid') {
+    const { data: ticketData } = await serviceSupabase
+      .from('tickets')
+      .select('ticket_types(event_id)')
+      .eq('id', ticketId)
+      .single()
+    const raw = ticketData as unknown as { ticket_types: { event_id: string } | null } | null
+    const eventId = raw?.ticket_types?.event_id
+    if (eventId) revalidatePath(`/organizer/events/${eventId}`)
+  }
+
   return { data: result, error: null }
 }

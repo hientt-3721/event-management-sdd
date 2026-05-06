@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { generateQrDataUrl } from '@/lib/qr'
 import type { ActionResult, TicketWithDetails } from './types'
@@ -24,6 +25,14 @@ export async function registerTicket(
     return { data: null, error: msg }
   }
 
+  // T003: revalidate event detail so ticket count updates
+  const { data: tt } = await supabase
+    .from('ticket_types')
+    .select('event_id')
+    .eq('id', ticketTypeId)
+    .single()
+  if (tt) revalidatePath(`/events/${(tt as unknown as { event_id: string }).event_id}`)
+
   const qrDataUrl = await generateQrDataUrl(ticketId as string)
   return { data: { ticketId: ticketId as string, qrDataUrl }, error: null }
 }
@@ -39,7 +48,7 @@ export async function cancelTicket(ticketId: string): Promise<ActionResult<void>
     .eq('id', ticketId)
     .single()
 
-  const t = ticket as unknown as { attendee_id: string; status: string; ticket_types: { events: { start_at: string } } } | null
+  const t = ticket as unknown as { attendee_id: string; status: string; ticket_types: { event_id: string; events: { start_at: string } } } | null
   if (!t) return { data: null, error: 'NOT_FOUND' }
   if (t.attendee_id !== user.id) return { data: null, error: 'FORBIDDEN' }
   if (t.status !== 'active') return { data: null, error: 'TICKET_NOT_ACTIVE' }
@@ -56,6 +65,12 @@ export async function cancelTicket(ticketId: string): Promise<ActionResult<void>
     .eq('id', ticketId)
 
   if (error) return { data: null, error: error.message }
+
+  // T004: revalidate affected pages so counts and status update
+  const eventId = t.ticket_types?.event_id
+  if (eventId) revalidatePath(`/events/${eventId}`)
+  revalidatePath('/tickets')
+  revalidatePath(`/tickets/${ticketId}`)
 
   // Cancel pending reminders
   await supabase

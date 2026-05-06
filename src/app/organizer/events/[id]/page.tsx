@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { getEventById } from '@/features/events/queries'
 import { Badge } from '@/components/ui/badge'
 import { OrganizerEventActions } from '@/components/organizer/organizer-event-actions'
@@ -21,6 +22,8 @@ export default async function OrganizerEventDetailPage({ params }: OrganizerEven
   const event = await getEventById(id)
   if (!event) notFound()
 
+  const t = await getTranslations('organizer')
+
   // Staff can view any event; organizer only their own
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
   const prof = profile as { role: string } | null
@@ -35,19 +38,13 @@ export default async function OrganizerEventDetailPage({ params }: OrganizerEven
     .in('ticket_type_id', event.ticket_types.map((tt) => tt.id))
     .eq('status', 'active')
 
-  const statusMap: Record<string, string> = {
-    draft: 'Nháp',
-    published: 'Đang mở',
-    cancelled: 'Đã huỷ',
-  }
-
   return (
     <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <div className="mb-6 flex items-start gap-3">
         <div className="flex-1">
           <div className="mb-1 flex items-center gap-2">
             <Badge variant={event.status === 'published' ? 'success' : event.status === 'cancelled' ? 'error' : 'default'}>
-              {statusMap[event.status]}
+              {t(`status.${event.status as 'draft' | 'published' | 'cancelled'}`)}
             </Badge>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">{event.name}</h1>
@@ -59,7 +56,7 @@ export default async function OrganizerEventDetailPage({ params }: OrganizerEven
                 href={`/organizer/events/${event.id}/edit`}
                 className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                ✏️ Sửa
+                ✏️ {t('editEvent')}
               </Link>
             )}
             <OrganizerEventActions event={event} />
@@ -70,16 +67,16 @@ export default async function OrganizerEventDetailPage({ params }: OrganizerEven
       <div className="mb-6 rounded-xl border border-gray-100 bg-gray-50 p-4 space-y-2 text-sm text-gray-700">
         <p>📅 {new Intl.DateTimeFormat('vi-VN', { dateStyle: 'full', timeStyle: 'short' }).format(new Date(event.start_at))}</p>
         <p>📍 {event.location}</p>
-        <p>👥 {attendeeCount ?? 0} người đăng ký</p>
+        <p>👥 {attendeeCount ?? 0} {t('attendees')}</p>
       </div>
 
-      <h2 className="mb-3 text-lg font-semibold text-gray-800">Loại vé</h2>
+      <h2 className="mb-3 text-lg font-semibold text-gray-800">{t('addTicketType')}</h2>
       <div className="space-y-3 mb-8">
         {event.status !== 'cancelled' ? (
           <AddTicketTypeForm event={event} />
         ) : (
           event.ticket_types.length === 0 ? (
-            <p className="text-sm text-gray-400">Không có loại vé.</p>
+            <p className="text-sm text-gray-400">{t('noEvents')}</p>
           ) : (
             event.ticket_types.map((tt) => (
               <div key={tt.id} className="rounded-xl border border-gray-200 bg-white p-4 flex items-center justify-between">
@@ -89,7 +86,7 @@ export default async function OrganizerEventDetailPage({ params }: OrganizerEven
                 </div>
                 <div className="text-right text-sm">
                   <p className="font-semibold">{tt.issued_count}/{tt.total_quantity}</p>
-                  <p className="text-gray-400">đã đăng ký</p>
+                  <p className="text-gray-400">{t('attendees')}</p>
                 </div>
               </div>
             ))
@@ -100,20 +97,20 @@ export default async function OrganizerEventDetailPage({ params }: OrganizerEven
       {event.status === 'published' && (
         <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center justify-between gap-4">
           <div>
-            <p className="font-semibold text-emerald-800">Check-in người tham dự</p>
-            <p className="text-sm text-emerald-600">Quét mã QR trên vé điện tử</p>
+            <p className="font-semibold text-emerald-800">{t('checkin')}</p>
+            <p className="text-sm text-emerald-600">{t('subtitle')}</p>
           </div>
           <Link
             href={`/organizer/events/${id}/checkin`}
             className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors whitespace-nowrap"
           >
-            🔍 Mở scanner
+            🔍 {t('checkin')}
           </Link>
         </div>
       )}
       <div className="flex gap-3">
         <Link href="/organizer" className="rounded-xl border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
-          ← Quay lại
+          ← {t('title')}
         </Link>
       </div>
     </main>

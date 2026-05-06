@@ -36,7 +36,9 @@
     "qrInstructions": "Xuất trình mã QR này khi check-in tại sự kiện.",
     "close": "Đóng",
     "ticketTypes": "Loại vé",
-    "registering": "Đang đăng ký..."
+    "registering": "Đang đăng ký...",
+    "qrAlt": "Mã QR vé của bạn",
+    "qrHint": "Xuất trình mã QR này khi check-in tại sự kiện."
   },
   "tickets": {
     "title": "Vé của tôi",
@@ -48,6 +50,11 @@
     "confirmCancel": "Xác nhận huỷ",
     "backToTickets": "← Quay lại danh sách vé",
     "ticketCode": "Mã vé",
+    "ticketDetail": "Chi tiết vé",
+    "qrTitle": "Mã QR của bạn",
+    "cancelError": "Không thể huỷ vé. Vui lòng thử lại.",
+    "confirmCancelMessage": "Bạn có chắc muốn huỷ vé này không?",
+    "goBack": "Quay lại",
     "status": {
       "active": "Còn hiệu lực",
       "used": "Đã sử dụng",
@@ -64,6 +71,32 @@
     "confirmCancelEvent": "Xác nhận huỷ",
     "checkin": "Check-in",
     "registrations": "đăng ký",
+    "editEvent": "Sửa",
+    "addTicketType": "Thêm loại vé",
+    "attendees": "người đăng ký",
+    "noEvents": "Chưa có sự kiện nào.",
+    "noEventsHint": "Tạo sự kiện đầu tiên của bạn.",
+    "form": {
+      "newEventTitle": "Tạo sự kiện mới",
+      "editEventTitle": "Chỉnh sửa sự kiện",
+      "nameLabel": "Tên sự kiện *",
+      "namePlaceholder": "VD: Tech Conference 2025",
+      "descLabel": "Mô tả *",
+      "descPlaceholder": "Mô tả về sự kiện...",
+      "startLabel": "Bắt đầu *",
+      "endLabel": "Kết thúc *",
+      "locationLabel": "Địa điểm *",
+      "locationPlaceholder": "VD: Hội trường A, 123 Nguyễn Huệ, TP.HCM",
+      "ticketTypesLabel": "Loại vé",
+      "ticketNamePlaceholder": "Tên loại vé *",
+      "ticketQuantityPlaceholder": "Số lượng",
+      "ticketDescPlaceholder": "Mô tả loại vé (tuỳ chọn)",
+      "addTicketType": "+ Thêm loại vé",
+      "createBtn": "Tạo sự kiện",
+      "saveBtn": "Lưu",
+      "cancelBtn": "Hủy",
+      "errorCreate": "Không thể tạo sự kiện: "
+    },
     "status": {
       "draft": "Nháp",
       "published": "Đang mở",
@@ -86,6 +119,14 @@
     "loginTitle": "Chào mừng!",
     "loginSubtitle": "Đăng nhập để đăng ký sự kiện và quản lý vé của bạn.",
     "signInWithGoogle": "Đăng nhập bằng Google",
+    "signInWithEmail": "Đăng nhập bằng Email",
+    "emailLabel": "Email",
+    "passwordLabel": "Mật khẩu",
+    "signIn": "Đăng nhập",
+    "signingIn": "Đang đăng nhập...",
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu",
+    "invalidCredentials": "Email hoặc mật khẩu không đúng.",
     "authError": "Đăng nhập thất bại. Vui lòng thử lại."
   },
   "errors": {
@@ -93,6 +134,7 @@
     "ALREADY_REGISTERED": "Bạn đã đăng ký vé này rồi.",
     "EVENT_NOT_PUBLISHED": "Sự kiện chưa mở đăng ký.",
     "UNAUTHENTICATED": "Vui lòng đăng nhập để thực hiện.",
-    "FORBIDDEN": "Bạn không có quyền thực hiện thao tác này."
+    "FORBIDDEN": "Bạn không có quyền thực hiện thao tác này.",
+    "unknown": "Đã có lỗi xảy ra."
   }
 }

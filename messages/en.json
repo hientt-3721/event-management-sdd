@@ -36,7 +36,9 @@
     "qrInstructions": "Show this QR code at check-in.",
     "close": "Close",
     "ticketTypes": "Ticket Types",
-    "registering": "Registering..."
+    "registering": "Registering...",
+    "qrAlt": "Your ticket QR code",
+    "qrHint": "Show this QR code at check-in."
   },
   "tickets": {
     "title": "My Tickets",
@@ -48,6 +50,11 @@
     "confirmCancel": "Confirm Cancellation",
     "backToTickets": "← Back to tickets",
     "ticketCode": "Ticket ID",
+    "ticketDetail": "Ticket Details",
+    "qrTitle": "Your QR Code",
+    "cancelError": "Unable to cancel ticket. Please try again.",
+    "confirmCancelMessage": "Are you sure you want to cancel this ticket?",
+    "goBack": "Go Back",
     "status": {
       "active": "Active",
       "used": "Used",
@@ -64,6 +71,32 @@
     "confirmCancelEvent": "Confirm Cancel",
     "checkin": "Check-In",
     "registrations": "registrations",
+    "editEvent": "Edit",
+    "addTicketType": "Add Ticket Type",
+    "attendees": "registrations",
+    "noEvents": "No events yet.",
+    "noEventsHint": "Create your first event.",
+    "form": {
+      "newEventTitle": "Create New Event",
+      "editEventTitle": "Edit Event",
+      "nameLabel": "Event Name *",
+      "namePlaceholder": "E.g. Tech Conference 2025",
+      "descLabel": "Description *",
+      "descPlaceholder": "Describe the event...",
+      "startLabel": "Start *",
+      "endLabel": "End *",
+      "locationLabel": "Location *",
+      "locationPlaceholder": "E.g. Hall A, 123 Main St",
+      "ticketTypesLabel": "Ticket Types",
+      "ticketNamePlaceholder": "Ticket type name *",
+      "ticketQuantityPlaceholder": "Quantity",
+      "ticketDescPlaceholder": "Ticket description (optional)",
+      "addTicketType": "+ Add Ticket Type",
+      "createBtn": "Create Event",
+      "saveBtn": "Save",
+      "cancelBtn": "Cancel",
+      "errorCreate": "Could not create event: "
+    },
     "status": {
       "draft": "Draft",
       "published": "Published",
@@ -86,6 +119,14 @@
     "loginTitle": "Welcome!",
     "loginSubtitle": "Sign in to register for events and manage your tickets.",
     "signInWithGoogle": "Sign in with Google",
+    "signInWithEmail": "Sign in with Email",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "invalidCredentials": "Email or password is incorrect.",
     "authError": "Sign in failed. Please try again."
   },
   "errors": {
@@ -93,6 +134,7 @@
     "ALREADY_REGISTERED": "You have already registered for this ticket.",
     "EVENT_NOT_PUBLISHED": "This event is not open for registration.",
     "UNAUTHENTICATED": "Please sign in to continue.",
-    "FORBIDDEN": "You do not have permission to perform this action."
+    "FORBIDDEN": "You do not have permission to perform this action.",
+    "unknown": "An error occurred."
   }
 }
